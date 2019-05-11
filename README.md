@@ -55,6 +55,12 @@ spring:
             client-secret: web_app
 ```
 
+To make Keycloak work, you need to add the following line to your hosts file (/etc/hosts on Mac/Linux, c:\Windows\System32\Drivers\etc\hosts on Windows).
+
+```sh
+127.0.0.1	keycloak
+```
+
 ### Okta
 
 If you'd like to use Okta instead of Keycloak, you'll need to change a few things. First, you'll need to create a free developer account at <https://developer.okta.com/signup/>. After doing so, you'll get your own Okta domain, that has a name like `https://dev-123456.okta.com`.

@@ -26,6 +26,22 @@ import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Optional;
 
+import com.drew.imaging.ImageMetadataReader;
+import com.drew.imaging.ImageProcessingException;
+import com.drew.metadata.Metadata;
+import com.drew.metadata.MetadataException;
+import com.drew.metadata.exif.ExifSubIFDDirectory;
+import com.drew.metadata.jpeg.JpegDirectory;
+
+import javax.xml.bind.DatatypeConverter;
+import java.io.BufferedInputStream;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+
+import java.time.Instant;
+import java.util.Date;
+
 /**
  * REST controller for managing {@link com.jhipster.gallery.domain.Album}.
  */
@@ -59,10 +75,18 @@ public class AlbumResource {
         if (album.getId() != null) {
             throw new BadRequestAlertException("A new album cannot already have an ID", ENTITY_NAME, "idexists");
         }
+
+        album = setMetadata(album);
+
         Album result = albumRepository.save(album);
         return ResponseEntity.created(new URI("/api/albums/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, false, ENTITY_NAME, result.getId().toString()))
             .body(result);
+    }
+
+    private Album setMetadata(Album album) {
+        album.setCreated(Instant.now());
+        return album;
     }
 
     /**

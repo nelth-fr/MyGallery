@@ -101,7 +101,7 @@ export class Photo extends React.Component<IPhotoProps, IPhotoState> {
                     ID <FontAwesomeIcon icon="sort" />
                   </th>
                   <th className="hand" onClick={this.sort('image')}>
-                    Image <FontAwesomeIcon icon="sort" />
+                    Miniature <FontAwesomeIcon icon="sort" />
                   </th>
                   <th className="hand" onClick={this.sort('title')}>
                     Title <FontAwesomeIcon icon="sort" />
@@ -142,9 +142,6 @@ export class Photo extends React.Component<IPhotoProps, IPhotoState> {
                             <img src={`data:${photo.imageContentType};base64,${photo.image}`} style={{ maxHeight: '30px' }} />
                             &nbsp;
                           </a>
-                          <span>
-                            {photo.imageContentType}, {byteSize(photo.image)}
-                          </span>
                         </div>
                       ) : null}
                     </td>

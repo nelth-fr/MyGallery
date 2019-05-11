@@ -84,6 +84,26 @@ export class AlbumUpdate extends React.Component<IAlbumUpdateProps, IAlbumUpdate
 
     const { description } = albumEntity;
 
+    const metadata = (
+      <div>
+        <AvGroup>
+          <Label id="createdLabel" for="album-created">
+            Created
+          </Label>
+          <AvInput
+            id="album-created"
+            type="datetime-local"
+            className="form-control"
+            name="created"
+            placeholder={'YYYY-MM-DD HH:mm'}
+            value={isNew ? null : convertDateTimeFromServer(this.props.albumEntity.created)} readOnly
+          />
+        </AvGroup>
+      </div>
+    );
+
+    const metadataRows = isNew ? '' : metadata;
+
     return (
       <div>
         <Row className="justify-content-center">
@@ -122,19 +142,7 @@ export class AlbumUpdate extends React.Component<IAlbumUpdateProps, IAlbumUpdate
                   </Label>
                   <AvInput id="album-description" type="textarea" name="description" />
                 </AvGroup>
-                <AvGroup>
-                  <Label id="createdLabel" for="album-created">
-                    Created
-                  </Label>
-                  <AvInput
-                    id="album-created"
-                    type="datetime-local"
-                    className="form-control"
-                    name="created"
-                    placeholder={'YYYY-MM-DD HH:mm'}
-                    value={isNew ? null : convertDateTimeFromServer(this.props.albumEntity.created)}
-                  />
-                </AvGroup>
+                    {metadataRows}
                 <AvGroup>
                   <Label for="album-user">User</Label>
                   <AvInput id="album-user" type="select" className="form-control" name="user.id">

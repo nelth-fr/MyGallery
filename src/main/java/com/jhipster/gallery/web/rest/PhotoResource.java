@@ -75,7 +75,6 @@ public class PhotoResource {
         if (photo.getId() != null) {
             throw new BadRequestAlertException("A new photo cannot already have an ID", ENTITY_NAME, "idexists");
         }
-
         try {
             photo = setMetadata(photo);
         } catch (ImageProcessingException ipe) {
