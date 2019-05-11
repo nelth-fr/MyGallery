@@ -83,6 +83,51 @@ export class PhotoUpdate extends React.Component<IPhotoUpdateProps, IPhotoUpdate
 
     const { image, imageContentType, description } = photoEntity;
 
+    const metadata = (
+      <div>
+        <AvGroup>
+          <Label id="heightLabel" for="photo-height">
+            Height
+          </Label>
+          <AvField id="photo-height" type="string" className="form-control" name="height" readOnly />
+        </AvGroup>
+        <AvGroup>
+          <Label id="widthLabel" for="photo-width">
+            Width
+          </Label>
+          <AvField id="photo-width" type="string" className="form-control" name="width" readOnly />
+        </AvGroup>
+        <AvGroup>
+          <Label id="takenLabel" for="photo-taken">
+            Taken
+          </Label>
+          <AvInput
+            id="photo-taken"
+            type="datetime-local"
+            className="form-control"
+            name="taken"
+            placeholder={'YYYY-MM-DD HH:mm'}
+            value={isNew ? null : convertDateTimeFromServer(this.props.photoEntity.taken)} readOnly
+          />
+        </AvGroup>
+        <AvGroup>
+          <Label id="uploadedLabel" for="photo-uploaded">
+            Uploaded
+          </Label>
+          <AvInput
+            id="photo-uploaded"
+            type="datetime-local"
+            className="form-control"
+            name="uploaded"
+            placeholder={'YYYY-MM-DD HH:mm'}
+            value={isNew ? null : convertDateTimeFromServer(this.props.photoEntity.uploaded)} readOnly
+          />
+        </AvGroup>
+      </div>
+    );
+
+    const metadataRows = isNew ? '' : metadata;
+
     return (
       <div>
         <Row className="justify-content-center">
@@ -151,44 +196,7 @@ export class PhotoUpdate extends React.Component<IPhotoUpdateProps, IPhotoUpdate
                   </Label>
                   <AvInput id="photo-description" type="textarea" name="description" />
                 </AvGroup>
-                <AvGroup>
-                  <Label id="heightLabel" for="photo-height">
-                    Height
-                  </Label>
-                  <AvField id="photo-height" type="string" className="form-control" name="height" />
-                </AvGroup>
-                <AvGroup>
-                  <Label id="widthLabel" for="photo-width">
-                    Width
-                  </Label>
-                  <AvField id="photo-width" type="string" className="form-control" name="width" />
-                </AvGroup>
-                <AvGroup>
-                  <Label id="takenLabel" for="photo-taken">
-                    Taken
-                  </Label>
-                  <AvInput
-                    id="photo-taken"
-                    type="datetime-local"
-                    className="form-control"
-                    name="taken"
-                    placeholder={'YYYY-MM-DD HH:mm'}
-                    value={isNew ? null : convertDateTimeFromServer(this.props.photoEntity.taken)}
-                  />
-                </AvGroup>
-                <AvGroup>
-                  <Label id="uploadedLabel" for="photo-uploaded">
-                    Uploaded
-                  </Label>
-                  <AvInput
-                    id="photo-uploaded"
-                    type="datetime-local"
-                    className="form-control"
-                    name="uploaded"
-                    placeholder={'YYYY-MM-DD HH:mm'}
-                    value={isNew ? null : convertDateTimeFromServer(this.props.photoEntity.uploaded)}
-                  />
-                </AvGroup>
+                    {metadataRows}
                 <AvGroup>
                   <Label for="photo-album">Album</Label>
                   <AvInput id="photo-album" type="select" className="form-control" name="album.id">

@@ -14,6 +14,9 @@ import { IPhoto } from 'app/shared/model/photo.model';
 import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
 import { ITEMS_PER_PAGE } from 'app/shared/util/pagination.constants';
 
+// Flickr like photo gallery
+import Gallery from 'react-photo-gallery';
+
 export interface IPhotoProps extends StateProps, DispatchProps, RouteComponentProps<{ url: string }> {}
 
 export type IPhotoState = IPaginationBaseState;
@@ -65,6 +68,12 @@ export class Photo extends React.Component<IPhotoProps, IPhotoState> {
 
   render() {
     const { photoList, match } = this.props;
+    const photoSet = photoList.map(photo => ({
+      src: `data:${photo.imageContentType};base64,${photo.image}`,
+      width: photo.height > photo.width ? 3 : photo.height === photo.width ? 1 : 4,
+      height: photo.height > photo.width ? 4 : photo.height === photo.width ? 1 : 3
+    }));
+
     return (
       <div>
         <h2 id="photo-heading">
@@ -74,7 +83,9 @@ export class Photo extends React.Component<IPhotoProps, IPhotoState> {
             &nbsp; Create new Photo
           </Link>
         </h2>
-        <div className="table-responsive">
+        <Gallery photos={photoSet}/>
+
+        <div className="mt-3 table-responsive">
           <InfiniteScroll
             pageStart={this.state.activePage}
             loadMore={this.handleLoadMore}
