@@ -22,7 +22,7 @@ export class Home extends React.Component<IHomeProp> {
     return (
       <Row>
         <Col md="9">
-          <h2>Welcome, Java Hipster!</h2>
+          <h2>Greetings!</h2>
           {account && account.login ? (
             <div>
               <Alert color="success">You are logged in as user {account.login}.</Alert>

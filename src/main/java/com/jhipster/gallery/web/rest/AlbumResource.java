@@ -3,7 +3,6 @@ package com.jhipster.gallery.web.rest;
 import com.jhipster.gallery.domain.Album;
 import com.jhipster.gallery.repository.AlbumRepository;
 import com.jhipster.gallery.web.rest.errors.BadRequestAlertException;
-
 import io.github.jhipster.web.util.HeaderUtil;
 import io.github.jhipster.web.util.PaginationUtil;
 import io.github.jhipster.web.util.ResponseUtil;
@@ -13,34 +12,18 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.util.MultiValueMap;
-import org.springframework.web.util.UriComponentsBuilder;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
-
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Optional;
-
-import com.drew.imaging.ImageMetadataReader;
-import com.drew.imaging.ImageProcessingException;
-import com.drew.metadata.Metadata;
-import com.drew.metadata.MetadataException;
-import com.drew.metadata.exif.ExifSubIFDDirectory;
-import com.drew.metadata.jpeg.JpegDirectory;
-
-import javax.xml.bind.DatatypeConverter;
-import java.io.BufferedInputStream;
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-
-import java.time.Instant;
-import java.util.Date;
 
 /**
  * REST controller for managing {@link com.jhipster.gallery.domain.Album}.
@@ -75,7 +58,6 @@ public class AlbumResource {
         if (album.getId() != null) {
             throw new BadRequestAlertException("A new album cannot already have an ID", ENTITY_NAME, "idexists");
         }
-
         album = setMetadata(album);
 
         Album result = albumRepository.save(album);
@@ -85,7 +67,10 @@ public class AlbumResource {
     }
 
     private Album setMetadata(Album album) {
-        album.setCreated(Instant.now());
+        if (album.getCreated() == null) {
+            Instant instant = Instant.now();
+            album.setCreated(instant);
+        }
         return album;
     }
 

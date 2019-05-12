@@ -16,7 +16,7 @@ export const Brand = props => (
   <NavbarBrand tag={Link} to="/" className="brand-logo">
     <BrandIcon />
     <span className="brand-title">MyGallery</span>
-    <span className="navbar-version">{appConfig.VERSION}</span>
+    {/*<span className="navbar-version">{appConfig.VERSION}</span>*/}
   </NavbarBrand>
 );
 
